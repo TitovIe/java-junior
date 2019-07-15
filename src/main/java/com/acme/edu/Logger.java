@@ -1,7 +1,7 @@
 package com.acme.edu;
 
 public class Logger {
-    private static void printConsole(String hint){
+    private static void printConsole(String hint) {
         System.out.println(hint);
     }
 
@@ -28,6 +28,9 @@ public class Logger {
     }
 
     public static void log(Object message) {
+        if (message == null) {
+            message = "null";
+        }
         printConsole("reference: " + message);
     }
 }
