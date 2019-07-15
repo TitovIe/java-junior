@@ -18,13 +18,14 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
 
     @After
     public void tearDown() {
+        Logger.flush();
         resetOut();
     }
     //endregion
 
 
-    /*
-    TODO: implement Logger solution to match specification as tests
+    String ls = System.lineSeparator();
+    //TODO: implement Logger solution to match specification as tests
 
     @Test
     public void shouldLogSequentIntegersAsSum() throws IOException {
@@ -38,14 +39,14 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
 
         //region then
         assertSysoutEquals(
-            "str 1\n" +
-            "3\n" +
-            "str 2\n" +
-            "0\n"
+            "str 1" + ls
+            + "3" + ls
+            + "str 2" + ls
+            + "0" + ls
         );
         //endregion
     }
-
+    /*
     @Test
     public void shouldLogCorrectlyIntegerOverflowWhenSequentIntegers() {
         //region when
