@@ -12,19 +12,20 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     //region given
     @Before
     public void setUpSystemOut() throws IOException {
+        Logger.resetBuffer();
         resetOut();
         captureSysout();
+        Logger.isDecorated = false;
     }
 
     @After
     public void tearDown() {
-        Logger.flush();
         resetOut();
     }
     //endregion
 
 
-    String ls = System.lineSeparator();
+    private String ls = System.lineSeparator();
     //TODO: implement Logger solution to match specification as tests
 
     @Test
@@ -36,7 +37,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         Logger.log("str 2");
         Logger.log(0);
         //endregion
-
+        Logger.flush();
         //region then
         assertSysoutEquals(
             "str 1" + ls
@@ -46,7 +47,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         );
         //endregion
     }
-    /*
+
     @Test
     public void shouldLogCorrectlyIntegerOverflowWhenSequentIntegers() {
         //region when
@@ -56,14 +57,14 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         Logger.log("str 2");
         Logger.log(0);
         //endregion
-
+        Logger.flush();
         //region then
         assertSysoutEquals(
-            "str 1\n" +
-            "10\n" +
-            Integer.MAX_VALUE + "\n" +
-            "str 2\n" +
-            "0\n"
+            "str 1" + ls
+                    + "10" + ls
+                    + Integer.MAX_VALUE + ls +
+                    "str 2" + ls
+                    + "0" + ls
         );
         //endregion
     }
@@ -77,18 +78,18 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         Logger.log("str 2");
         Logger.log(0);
         //endregion
-
+        Logger.flush();
         //region then
         assertSysoutEquals(
-            "str 1\n" +
-            "10\n" +
-            Byte.MAX_VALUE + "\n" +
-            "str 2\n" +
-            "0\n"
+            "str 1" + ls
+            + "10" + ls
+            + Byte.MAX_VALUE + ls +
+            "str 2" + ls
+            + "0" + ls
         );
         //endregion
     }
-
+/*
     @Test
     public void shouldLogSameSubsequentStringsWithoutRepeat() throws IOException {
         //region when

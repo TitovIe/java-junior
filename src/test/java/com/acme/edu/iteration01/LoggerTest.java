@@ -13,6 +13,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
 
     @Before
     public void setUpSystemOut() throws IOException {
+        Logger.resetBuffer();
         resetOut();
         captureSysout();
     }
@@ -35,8 +36,8 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         assertSysoutContains("primitive: ");
         String ls = System.lineSeparator();
         assertSysoutEquals("primitive: 1" + ls
-                + "primitive: 0" + ls +
-                "primitive: -1" + ls);
+                + "primitive: 0" + ls
+                + "primitive: -1" + ls);
         //endregion
     }
 
