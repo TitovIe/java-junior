@@ -1,6 +1,5 @@
 package com.acme.edu;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +8,8 @@ import java.util.Objects;
 public class Logger {
     private static String primitive = "primitive";
     private static List<Object> buffer = new ArrayList<>();
+    private static String lastName = null;
+    private static int counterString = 0;
     public static boolean isDecorated = true;
 
     public static void resetBuffer() {
@@ -24,14 +25,14 @@ public class Logger {
         int sumPrimitive = 0;
 
         for (Object value : buffer) {
-            sumPrimitive = checkLimit(sumPrimitive, value);
+            sumPrimitive = sumAndCheckLimit(sumPrimitive, value);
         }
 
         buffer.clear();
         System.out.println(sumPrimitive);
     }
 
-    private static int checkLimit(int sumPrimitive, Object value) {
+    private static int sumAndCheckLimit(int sumPrimitive, Object value) {
         if (value instanceof Integer) {
             int valueInt = (int) value;
             if ((valueInt >= 0 && Integer.MAX_VALUE - valueInt > sumPrimitive)
@@ -62,6 +63,19 @@ public class Logger {
         } else {
             flush();
         }
+
+        System.out.println(String.valueOf(message));
+    }
+
+    private static void saveNotDecorated(Types type, Object message) {
+        if (type.isPrimitive() &&
+                !(message instanceof Boolean)) {
+            buffer.add(message);
+            return;
+        } else {
+            flush();
+        }
+
         System.out.println(String.valueOf(message));
     }
 
@@ -77,6 +91,24 @@ public class Logger {
                 System.out.println(getType(type) + res);
             } else {
                 System.out.println(getType(type) + String.valueOf(message));
+            }
+        } else {
+            saveNotDecorated(type, message);
+        }
+    }
+
+    private static void saveLog(Types type, Object message) {
+        if (isDecorated) {
+            if (message instanceof int[]) {
+                String res = Arrays.toString((int[]) message)
+                        .replace('[', '{')
+                        .replace(']', '}');
+                System.out.println(type + res);
+            } else if (message instanceof String[]) {
+                String res = String.join(System.lineSeparator(), (String[]) message);
+                System.out.println(type + res);
+            } else {
+                System.out.println(type + String.valueOf(message));
             }
         } else {
             saveNotDecorated(type, message);
