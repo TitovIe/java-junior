@@ -55,9 +55,8 @@ public class Logger {
         return sumPrimitive;
     }
 
-    private static void saveNotDecorated(String type, Object message) {
-        if (Objects.equals(type, primitive) &&
-                !(message instanceof Boolean)) {
+    private static void saveNotDecorated(Object message) {
+        if (!(message instanceof String)) {
             buffer.add(message);
             return;
         } else {
@@ -93,7 +92,7 @@ public class Logger {
                 System.out.println(getType(type) + String.valueOf(message));
             }
         } else {
-            saveNotDecorated(type, message);
+            saveNotDecorated(message);
         }
     }
 
@@ -120,7 +119,11 @@ public class Logger {
     }
 
     public static void log(int message) {
-        saveLog(primitive, message);
+        //saveLog(primitive, message);
+        Command command = new Command(message, isDecorated);
+        LoggerController loggerController =
+                new LoggerController(command);
+        loggerController.printMessageDecorator();
     }
 
     public static void log(byte message) {
@@ -133,6 +136,11 @@ public class Logger {
 
     public static void log(String message) {
         saveLog("string", message);
+
+        Command command = new Command(message, isDecorated);
+        LoggerController loggerController =
+                new LoggerController(command);
+        loggerController.printMessageDecorator();
     }
 
     public static void log(boolean message) {
