@@ -2,14 +2,14 @@ package com.acme.edu;
 
 import com.acme.edu.Saver.LogSaver;
 
-class LoggerController {
+public class LoggerController {
     private LogSaver logSaver;
 
-    LoggerController(LogSaver logSaver, Command command) {
+    public LoggerController(LogSaver logSaver, Command command) {
         this.logSaver = logSaver;
     }
 
-    LogSaver getLogSaver() {
+    public LogSaver getLogSaver() {
         return logSaver;
     }
 }

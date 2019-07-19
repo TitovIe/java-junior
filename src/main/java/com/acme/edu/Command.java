@@ -6,29 +6,40 @@ public class Command {
     private Decorator decorator;
     private Accamulator accamulator;
     private Object message;
-    private String messageDecor = "";
+    private String messageFormat;
+
+    public Object getMessage() {
+        return message;
+    }
+
+    public String getMessageFormat() {
+        return messageFormat;
+    }
 
     public Command(Decorator decorator, Object message) throws Exception {
         this.decorator = decorator;
         this.message = message;
-        messageDecor = this.decorator.getDecorString(this.message);
+        messageFormat = this.decorator.getDecorString(this.message);
     }
 
     public Command(Accamulator accamulator, Object message) {
         this.accamulator = accamulator;
         this.message = message;
-        sumPart(this.accamulator.saveData(this.message));
+        this.accamulator.saveData(this.message);
+        messageFormat = accamulator.getMessageFormat();
+        accamulator.setMessageFormat("");
+        //sumPart();
     }
 
     private void sumPart(String partMessage) {
         if (!partMessage.isEmpty())
-            messageDecor += partMessage;
+            messageFormat += partMessage;
     }
 
     @Override
     public String toString() {
         try {
-            return messageDecor;
+            return messageFormat;
         } catch (Exception e) {
             e.printStackTrace();
         }
