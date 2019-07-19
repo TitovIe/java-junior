@@ -28,12 +28,6 @@ public class Command {
         this.accamulator.saveData(this.message);
         messageFormat = accamulator.getMessageFormat();
         accamulator.setMessageFormat("");
-        //sumPart();
-    }
-
-    private void sumPart(String partMessage) {
-        if (!partMessage.isEmpty())
-            messageFormat += partMessage;
     }
 
     @Override
