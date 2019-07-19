@@ -1,5 +1,8 @@
 package com.acme.edu;
 
+import com.acme.edu.Decorator.*;
+import com.acme.edu.Saver.LogSaverConsole;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,6 +11,7 @@ import java.util.Objects;
 public class Logger {
     private static String primitive = "primitive";
     private static List<Object> buffer = new ArrayList<>();
+    private static Accamulator accamulator = new Accamulator();
     private static String lastName = null;
     private static int counterString = 0;
     public static boolean isDecorated = true;
@@ -55,8 +59,9 @@ public class Logger {
         return sumPrimitive;
     }
 
-    private static void saveNotDecorated(Object message) {
-        if (!(message instanceof String)) {
+    private static void saveNotDecorated(String type, Object message) {
+        if (Objects.equals(type, primitive) &&
+                !(message instanceof Boolean)) {
             buffer.add(message);
             return;
         } else {
@@ -92,7 +97,7 @@ public class Logger {
                 System.out.println(getType(type) + String.valueOf(message));
             }
         } else {
-            saveNotDecorated(message);
+            saveNotDecorated(type, message);
         }
     }
 
@@ -118,47 +123,88 @@ public class Logger {
         return type + ": ";
     }
 
-    public static void log(int message) {
+    public static void log(int message) throws Exception {
         //saveLog(primitive, message);
-        Command command = new Command(message, isDecorated);
+
+        Command command;
+        if (isDecorated)
+            command = new Command(new DecoratorPrimitive(), message);
+        else
+            command = new Command(accamulator, message);
+
         LoggerController loggerController =
-                new LoggerController(command);
-        loggerController.printMessageDecorator();
+                new LoggerController(new LogSaverConsole(), command);
+        loggerController.getLogSaver().save(command);
     }
 
-    public static void log(byte message) {
-        saveLog(primitive, message);
-    }
+    public static void log(byte message) throws Exception {
+        //saveLog(primitive, message);
 
-    public static void log(char message) {
-        saveLog("char", message);
-    }
-
-    public static void log(String message) {
-        saveLog("string", message);
-
-        Command command = new Command(message, isDecorated);
+        Command command = new Command(new DecoratorPrimitive(), message);
         LoggerController loggerController =
-                new LoggerController(command);
-        loggerController.printMessageDecorator();
+                new LoggerController(new LogSaverConsole(), command);
+        loggerController.getLogSaver().save(command);
     }
 
-    public static void log(boolean message) {
-        saveLog(primitive, message);
+    public static void log(char message) throws Exception {
+        //saveLog("char", message);
+
+        Command command = new Command(new DecoratorChar(), message);
+        LoggerController loggerController =
+                new LoggerController(new LogSaverConsole(), command);
+        loggerController.getLogSaver().save(command);
     }
 
-    public static void log(Object message) {
-        if (message == null) {
-            message = "null";
-        }
-        saveLog("reference", message);
+    public static void log(String message) throws Exception {
+        //saveLog("string", message);
+
+        Command command;
+        if (isDecorated)
+            command = new Command(new DecoratorString(), message);
+        else
+            command = new Command(accamulator, message);
+
+        LoggerController loggerController =
+                new LoggerController(new LogSaverConsole(), command);
+        loggerController.getLogSaver().save(command);
     }
 
-    public static void log(int... arrayInt) {
-        saveLog("primitives array", arrayInt);
+    public static void log(boolean message) throws Exception {
+        //saveLog(primitive, message);
+
+        Command command = new Command(new DecoratorPrimitive(), message);
+        LoggerController loggerController =
+                new LoggerController(new LogSaverConsole(), command);
+        loggerController.getLogSaver().save(command);
     }
 
-    public static void log(String... arrayString) {
-        saveLog("", arrayString);
+    public static void log(Object message) throws Exception {
+//        if (message == null) {
+//            message = "null";
+//        }
+//        saveLog("reference", message);
+
+        Command command = new Command(new DecoratorObject(), message);
+        LoggerController loggerController =
+                new LoggerController(new LogSaverConsole(), command);
+        loggerController.getLogSaver().save(command);
+    }
+
+    public static void log(int... arrayInt) throws Exception {
+        //saveLog("primitives array", arrayInt);
+
+        Command command = new Command(new DecoratorArrayInt(), arrayInt);
+        LoggerController loggerController =
+                new LoggerController(new LogSaverConsole(), command);
+        loggerController.getLogSaver().save(command);
+    }
+
+    public static void log(String... arrayString) throws Exception {
+        //saveLog("", arrayString);
+
+        Command command = new Command(new DecoratorArrayString(), arrayString);
+        LoggerController loggerController =
+                new LoggerController(new LogSaverConsole(), command);
+        loggerController.getLogSaver().save(command);
     }
 }

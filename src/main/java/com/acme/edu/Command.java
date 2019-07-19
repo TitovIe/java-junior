@@ -1,28 +1,37 @@
 package com.acme.edu;
 
+import com.acme.edu.Decorator.Decorator;
+
 public class Command {
+    private Decorator decorator;
+    private Accamulator accamulator;
     private Object message;
-    private boolean isDecorated;
-    private Class<?> typeObject;
-    private String typeObjectName;
+    private String messageDecor = "";
 
-    public Command(Object message, boolean isDecorated) {
+    public Command(Decorator decorator, Object message) throws Exception {
+        this.decorator = decorator;
         this.message = message;
-        this.isDecorated = isDecorated;
-
-        this.typeObjectName = this.message.getClass().toString();
-        this.typeObject = message.getClass();
+        messageDecor = this.decorator.getDecorString(this.message);
     }
 
-    public Object getMessage() {
-        return message;
+    public Command(Accamulator accamulator, Object message) {
+        this.accamulator = accamulator;
+        this.message = message;
+        sumPart(this.accamulator.saveData(this.message));
     }
 
-    public Class<?> getTypeObject() {
-        return typeObject;
+    private void sumPart(String partMessage) {
+        if (!partMessage.isEmpty())
+            messageDecor += partMessage;
     }
 
-    public String getTypeObjectName() {
-        return typeObjectName;
+    @Override
+    public String toString() {
+        try {
+            return messageDecor;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

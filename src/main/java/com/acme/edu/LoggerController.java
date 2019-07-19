@@ -1,19 +1,15 @@
 package com.acme.edu;
 
-public class LoggerController {
-    private Command command;
+import com.acme.edu.Saver.LogSaver;
 
-    public LoggerController(Command command) {
-        this.command = command;
+class LoggerController {
+    private LogSaver logSaver;
+
+    LoggerController(LogSaver logSaver, Command command) {
+        this.logSaver = logSaver;
     }
 
-    public void printMessageDecorator() {
-        DecoratePrint decoratePrint = new DecoratePrint();
-        decoratePrint.print(command.getTypeObject(), command.getTypeObjectName());
-    }
-
-    public void printMessageAccamulator() {
-        AccamulatorPrint accamulatorPrint = new AccamulatorPrint();
-        accamulatorPrint.saveNotDecorated(command);
+    LogSaver getLogSaver() {
+        return logSaver;
     }
 }

@@ -27,17 +27,18 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     //TODO: implement Logger solution to match specification as tests
 
     @Test
-    public void shouldLogIntegersArray() throws IOException {
+    public void shouldLogIntegersArray() throws Exception {
         //region when
-        Logger.log(new int[] {-1, 0, 1});
+        Logger.log(-1, 0, 1);
         //endregion
 
         //region then
         assertSysoutEquals(
-            "primitives array: {-1, 0, 1}" + ls
+                "primitives array: {-1, 0, 1}" + ls
         );
         //endregion
     }
+
     /*
     @Test
     public void shouldLogIntegersMatrix() throws IOException {
@@ -74,7 +75,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     }
 */
     @Test
-    public void shouldLogStringsWithOneMethodCall() throws IOException {
+    public void shouldLogStringsWithOneMethodCall() throws Exception {
         //region when
         Logger.log("str1", "string 2", "str 3");
         //endregion

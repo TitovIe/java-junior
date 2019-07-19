@@ -29,7 +29,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     //TODO: implement Logger solution to match specification as tests
 
     @Test
-    public void shouldLogSequentIntegersAsSum() throws IOException {
+    public void shouldLogSequentIntegersAsSum() throws Exception {
         //region when
         Logger.log("str 1");
         Logger.log(1);
@@ -40,16 +40,16 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         Logger.flush();
         //region then
         assertSysoutEquals(
-            "str 1" + ls
-            + "3" + ls
-            + "str 2" + ls
-            + "0" + ls
+                "str 1" + ls
+                        + "3" + ls
+                        + "str 2" + ls
+                        + "0" + ls
         );
         //endregion
     }
 
     @Test
-    public void shouldLogCorrectlyIntegerOverflowWhenSequentIntegers() {
+    public void shouldLogCorrectlyIntegerOverflowWhenSequentIntegers() throws Exception {
         //region when
         Logger.log("str 1");
         Logger.log(10);
@@ -60,32 +60,32 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         Logger.flush();
         //region then
         assertSysoutEquals(
-            "str 1" + ls
-                    + "10" + ls
-                    + Integer.MAX_VALUE + ls +
-                    "str 2" + ls
-                    + "0" + ls
+                "str 1" + ls
+                        + "10" + ls
+                        + Integer.MAX_VALUE + ls +
+                        "str 2" + ls
+                        + "0" + ls
         );
         //endregion
     }
 
     @Test
-    public void shouldLogCorrectlyByteOverflowWhenSequentBytes() {
+    public void shouldLogCorrectlyByteOverflowWhenSequentBytes() throws Exception {
         //region when
         Logger.log("str 1");
-        Logger.log((byte)10);
-        Logger.log((byte)Byte.MAX_VALUE);
+        Logger.log((byte) 10);
+        Logger.log((byte) Byte.MAX_VALUE);
         Logger.log("str 2");
         Logger.log(0);
         //endregion
         Logger.flush();
         //region then
         assertSysoutEquals(
-            "str 1" + ls
-            + "10" + ls
-            + Byte.MAX_VALUE + ls +
-            "str 2" + ls
-            + "0" + ls
+                "str 1" + ls
+                        + "10" + ls
+                        + Byte.MAX_VALUE + ls +
+                        "str 2" + ls
+                        + "0" + ls
         );
         //endregion
     }
