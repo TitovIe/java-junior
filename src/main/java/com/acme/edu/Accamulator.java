@@ -7,6 +7,10 @@ public class Accamulator {
     private List<Object> buffer;
     private String messageFormat = "";
 
+    public List<Object> getBuffer() {
+        return buffer;
+    }
+
     public Accamulator() {
         buffer = new ArrayList<>();
     }

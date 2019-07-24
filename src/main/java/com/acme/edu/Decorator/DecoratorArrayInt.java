@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class DecoratorArrayInt implements Decorator {
     @Override
-    public String getDecorString(Object message) throws Exception {
+    public String getDecorString(Object message) {
         String messageDecor = Arrays.toString((int[]) message)
                 .replace('[', '{')
                 .replace(']', '}');

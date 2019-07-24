@@ -33,6 +33,7 @@ public class Logger {
 
         LoggerController loggerController =
                 new LoggerController(new LogSaverConsole(), command);
+
         loggerController.getLogSaver().save(command);
     }
 

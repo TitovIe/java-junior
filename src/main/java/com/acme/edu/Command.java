@@ -16,7 +16,7 @@ public class Command {
         return messageFormat;
     }
 
-    public Command(Decorator decorator, Object message) throws Exception {
+    public Command(Decorator decorator, Object message) {
         this.decorator = decorator;
         this.message = message;
         messageFormat = this.decorator.getDecorString(this.message);
@@ -36,6 +36,7 @@ public class Command {
             return messageFormat;
         } catch (Exception e) {
             e.printStackTrace();
+
         }
         return null;
     }
