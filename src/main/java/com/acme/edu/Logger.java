@@ -2,7 +2,9 @@ package com.acme.edu;
 
 import com.acme.edu.Decorator.*;
 import com.acme.edu.Saver.LogSaverConsole;
+import com.acme.edu.Saver.LogSaverFile;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,7 +34,7 @@ public class Logger {
             command = new Command(accamulator, message);
 
         LoggerController loggerController =
-                new LoggerController(new LogSaverConsole(), command);
+                new LoggerController(new LogSaverFile(), command);
 
         loggerController.getLogSaver().save(command);
     }
@@ -70,7 +72,7 @@ public class Logger {
             command = new Command(accamulator, message);
 
         LoggerController loggerController =
-                new LoggerController(new LogSaverConsole(), command);
+                new LoggerController(new LogSaverFile(), command);
         loggerController.getLogSaver().save(command);
     }
 

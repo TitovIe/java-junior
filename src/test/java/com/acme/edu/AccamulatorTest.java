@@ -20,7 +20,7 @@ public class AccamulatorTest {
     }
 
     @Test
-    public void flush() {
+    public void flushTest() {
         Accamulator accamulator = new Accamulator();
         accamulator.flush(true);
         assertEquals("", accamulator.getMessageFormat());

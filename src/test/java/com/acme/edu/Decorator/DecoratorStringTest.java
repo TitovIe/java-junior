@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 public class DecoratorStringTest {
 
     @Test
-    public void getDecorString() {
+    public void shouldGetFormatStringWhenCallGetDecorString() {
         String dummy = "test";
         DecoratorString ds = new DecoratorString();
         assertEquals("string: test", ds.getDecorString(dummy));
